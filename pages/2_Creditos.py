@@ -1,7 +1,9 @@
 import streamlit as st
 
-
-st.title('Créditos')
+st.set_page_config(
+    page_title="Créditos",
+)
+st.write('Créditos')
 
 
 st.markdown('Los conocimientos utilizados en esta aplicación se le atribuyen al señor Wlhelm Cauer: ')

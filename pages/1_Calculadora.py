@@ -42,7 +42,7 @@ try:
     Li = cauer.Li_SN(k)
 
     st.success(f"$Sn_{{k}}(z) =  {np.real_if_close(sn):.4f}$")
-    st.info(f"$L(k) =  {L:.4f}$")s
+    st.info(f"$L(k) =  {L:.4f}$")
     st.info(f"$Li(k) = {Li:.4f}$")
 except:
     st.error("Entrada inválida")

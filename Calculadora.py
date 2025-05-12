@@ -25,7 +25,7 @@ try:
     fig.update_layout(
         xaxis_title="Real",
         yaxis_title="Imaginary",
-        width=400, height=400,
+        width=400, height=300,
         showlegend=False,
         xaxis=dict(title="Real", range=[-2.8*L, 2.8*L]),
         yaxis=dict(title="Imaginary", range=[-Li/10, 2*Li]),
@@ -61,11 +61,16 @@ try:
         marker=dict(symbol="x", size=14, color="red", line_width=2),
         name="poles"
     ))
+    
+    fig.update_layout(
+        margin=dict(l=10, r=10, t=5, b=10)
+    )
+
 
 
     st.plotly_chart(fig, use_container_width=True)
     st.success(f"$Sn_{{k}}(z) =  {np.real_if_close(sn):.4f}$")
     st.info(f"$L(k) =  {L:.4f}$")
-    st.info(f"$Li(k) = {Li:.4f}$")
+    st.info(f"$L_i(k) = {Li:.4f}$")
 except:
     st.error("Entrada inválida")

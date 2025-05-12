@@ -1,3 +1,3 @@
 To run:
 
-    streamlit run calculadora.py
+    streamlit run Calculadora.py

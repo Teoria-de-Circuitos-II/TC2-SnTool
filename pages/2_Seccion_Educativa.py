@@ -44,13 +44,13 @@ st.markdown('Por lo tanto, se puede computar el semi período imaginario como: '
 st.latex(r''' L_i(k) =\frac{\pi}{2\cdot AGM(1, k)}''')
 
 
+st.write('El siguiente gráfico muestra la relación complementaria entre ambos semi períodos: ')
+st.image('L_Li.png')
+
 
 st.markdown(f'El período real del seno elíptico es $4L$ y el período imaginario es $2L_i$. ')
 st.markdown( 'Por lo tanto se cumple la propiedad fundamental de doble periocidad de las funciones elípticas: ')
 
 st.latex(r'''Sn_{k}(z + 4L)  =  Sn_{k}(z)''')
 st.latex(r'''Sn_{k}(z + j \cdot 2L_i)  =  Sn_{k}(z)''')
-
-
-st.image('L_Li.png')
 

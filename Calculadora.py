@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 from cauer import Cauer
-import plotly.graph_objs as go
 
 st.markdown("""
         <style>
@@ -12,17 +11,15 @@ st.markdown("""
         </style>
         """, unsafe_allow_html=True)
 
-st.title("🧮 Calculadora del Seno Elíptico")
+st.title("Calculadora del Seno Elíptico 🧮")
 
 st.latex(r'''Sn_{k}(z) =  \omega  \iff  \int_{0}^\omega \frac{d\omega}{\sqrt{1-\omega^2} \cdot \sqrt{1-k^2\omega^2}}  = z''')
 
-z_str = st.text_input("Número complejo z", "1+0.5j")
+z_str = st.text_input("Argumento complejo z", "1+0.5j")
 k = st.number_input("Parámetro k", value=0.80, min_value=0.00, max_value=1.00, step=0.001, format="%0.3f")
 
 
 cauer = Cauer()
-maxLi = cauer.Li_SN(0.001)
-maxL = cauer.L_SN(0.999)
 
 try:
     z_str =z_str.replace(" ", "")
@@ -31,67 +28,7 @@ try:
     L = cauer.L_SN(k)
     Li = cauer.Li_SN(k)
 
-    zeros = np.array([[{"re": 2*n*L, "im": 2*i*Li} for n in range(-20, 20)] for i in range(0, 10)]).flatten()
-    poles = np.array([[{"re": 2*n*L, "im": (2*i-1)*Li} for n in range(-20, 20)] for i in range(0, 10)]).flatten()
-    
-    xlim = max([abs(z.real), 2*maxL])*1.4
-    xlims = [-xlim, xlim]
-    if(z.imag < -Li/10):
-        ylims = [z.imag, maxLi]
-    elif(z.imag > maxLi):
-        ylims = [-z.imag/10, z.imag]
-    else:
-        ylims = [-maxLi/10, maxLi]
-    ylims[0] *= 1.4
-    ylims[1] *= 1.4
-
-    fig = go.Figure()
-    fig.update_layout(
-        xaxis_title="Real",
-        yaxis_title="Imaginary",
-        width=400, height=300,
-        showlegend=False
-    )
-    
-    fig.update_layout(
-        xaxis=dict(title="Real", range=xlims),
-        yaxis=dict(title="Imaginary", range=ylims),
-    )
-    fig.update_layout(
-        shapes=[
-            dict(
-                type="line",
-                x0=0, x1=0,
-                y0=ylims[0], y1=ylims[1],  # Match your y-axis range
-                line=dict(color="#31333f", width=1)
-            )
-        ]
-    )
-    fig.add_trace(go.Scatter(
-        x=[z["re"] for z in zeros],
-        y=[z["im"] for z in zeros],
-        mode="markers",
-        marker=dict(symbol="circle", size=12, color="lightblue"),
-        name="zeros"
-    ))
-    fig.add_trace(go.Scatter(
-        x=[p["re"] for p in poles],
-        y=[p["im"] for p in poles],
-        mode="markers",
-        marker=dict(symbol="x", size=14, color="red", line_width=2),
-        name="poles"
-    ))
-    fig.add_trace(go.Scatter(
-        x=[z.real],
-        y=[z.imag],
-        mode="markers",
-        marker=dict(symbol="circle", size=10, color="green"),
-        name="point"
-    ))
-    
-    fig.update_layout(
-        margin=dict(l=10, r=10, t=5, b=10)
-    )
+    fig = cauer.config_figure(z, L, Li)
 
     st.success(f"$Sn_{{k}}(z) =  {np.real_if_close(sn):.4f}$")
     st.info(f"$L(k) =  {L:.4f}$")

@@ -6,18 +6,16 @@ st.set_page_config(
 )
 st.title('Créditos ✍️')
 
-image_info_list = [{'text':'La integral elíptica fue descubierta por Niels Henrik Abel: ' , 'path': 'Niels_Henrik_Abel.jpg'}, {'text':  'La siguiente aplicación fue realizada por la cátedra Teoría de Circuitos 2 del ITBA:', 'path': 'photo_cauer.jpg'}]
 
 
 
-grid = st.grid()
-for image_info in image_info_list:
-    row = grid.row()
-    row.markdown()
-    row.image(image_info.image)
+st.markdown('La integral elíptica fue descubierta por Niels Henrik Abel: ')
+st.image('Niels_Henrik_Abel.jpg')
 
+st.markdown('La función aproximación de mínimo orden fue definida por Wilhelm Cauers')
+st.image('photo_cauer.jpg')
 
-
+st.markdown('La siguiente aplicación fue realizada por la cátedra Teoría de Circuitos 2 del ITBA:')
 
 st.markdown("- Candela Gioia")
 st.markdown("- Juan Francisco Sbruzzi")

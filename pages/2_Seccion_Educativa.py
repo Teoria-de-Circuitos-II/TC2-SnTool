@@ -29,6 +29,7 @@ st.latex(r''' L(k) = \frac{\pi}{2\cdot AGM(1, \sqrt{1-k^2})}''')
 
 
 
+
 st.markdown(f'El semi período **imaginario** del seno elíptico de parámetro $k$ se denomina $L_i$, el cual se calcula como: ')
 
 st.latex(r'''  L_i(k) =  \int_{1}^{\frac{1}{k_1}} \frac{d\omega}{\sqrt{1-\omega^2} \cdot \sqrt{1-k^2\omega^2}} ''')
@@ -49,3 +50,7 @@ st.markdown( 'Por lo tanto se cumple la propiedad fundamental de doble periocida
 
 st.latex(r'''Sn_{k}(z + 4L)  =  Sn_{k}(z)''')
 st.latex(r'''Sn_{k}(z + j \cdot 2L_i)  =  Sn_{k}(z)''')
+
+
+st.image('L_Li.png')
+

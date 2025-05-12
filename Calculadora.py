@@ -3,6 +3,15 @@ import numpy as np
 from cauer import Cauer
 import plotly.graph_objs as go
 
+st.markdown("""
+        <style>
+               .block-container {
+                    padding-top: 3rem;
+                    padding-bottom: 0rem;
+                }
+        </style>
+        """, unsafe_allow_html=True)
+
 st.title("🧮 Calculadora del Seno Elíptico")
 
 st.latex(r'''Sn_{k}(z) =  \omega  \iff  \int_{0}^\omega \frac{d\omega}{\sqrt{1-\omega^2} \cdot \sqrt{1-k^2\omega^2}}  = z''')
@@ -11,25 +20,28 @@ z_str = st.text_input("Número complejo z", "1+0.5j")
 k = st.number_input("Parámetro k", value=0.80, min_value=0.00, max_value=1.00, step=0.001, format="%0.3f")
 
 
+cauer = Cauer()
+maxLi = cauer.Li_SN(0.001)
+maxL = cauer.L_SN(0.999)
+
 try:
-    cauer = Cauer()
     z_str =z_str.replace(" ", "")
     z = complex(z_str)
     sn = cauer.SenoEliptico(z=z, k=k)
     L = cauer.L_SN(k)
     Li = cauer.Li_SN(k)
 
-    zeros = [{"re": 2*n*L, "im": 0} for n in range(-20, 20)]
-    poles = [{"re": 2*n*L, "im": Li} for n in range(-20, 20)]
+    zeros = np.array([[{"re": 2*n*L, "im": 2*i*Li} for n in range(-20, 20)] for i in range(0, 10)]).flatten()
+    poles = np.array([[{"re": 2*n*L, "im": (2*i-1)*Li} for n in range(-20, 20)] for i in range(0, 10)]).flatten()
     
-    xlim = max([abs(z.real), 2*L])*1.4
-    xlims= [-xlim, xlim]
+    xlim = max([abs(z.real), 2*maxL])*1.4
+    xlims = [-xlim, xlim]
     if(z.imag < -Li/10):
-        ylims = [z.imag, Li]
-    elif(z.imag > Li):
+        ylims = [z.imag, maxLi]
+    elif(z.imag > maxLi):
         ylims = [-z.imag/10, z.imag]
     else:
-        ylims = [-Li/10, Li]
+        ylims = [-maxLi/10, maxLi]
     ylims[0] *= 1.4
     ylims[1] *= 1.4
 
@@ -80,8 +92,6 @@ try:
     fig.update_layout(
         margin=dict(l=10, r=10, t=5, b=10)
     )
-
-
 
     st.success(f"$Sn_{{k}}(z) =  {np.real_if_close(sn):.4f}$")
     st.info(f"$L(k) =  {L:.4f}$")

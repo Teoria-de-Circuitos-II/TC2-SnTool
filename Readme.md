@@ -1,3 +1,3 @@
 To run:
 
-    streamlit run Creditos.py
+    streamlit run calculador.py

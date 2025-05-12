@@ -118,7 +118,7 @@ class Cauer:
             y=[z.imag],
             mode="markers",
             marker=dict(symbol="diamond", size=10, color="#2ca02c"),
-            name="point"
+            name="argument"
         ))
         
         fig.update_layout(
